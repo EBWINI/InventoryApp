@@ -50,10 +50,3 @@ jobs:
           name: InventoryApp-iOS
           path: InventoryApp-iOS.ipa
           retention-days: 7
-
-      - name: Upload iOS App
-        uses: actions/upload-artifact@v4
-        with:
-          name: InventoryApp-iOS
-          path: publish-ios/
-          retention-days: 7
