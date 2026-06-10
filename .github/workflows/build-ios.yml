@@ -8,19 +8,19 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-    
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET 9 (pinned)
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: |
-            9.0.x
-            10.0.x
+          dotnet-version: '9.0.100'
 
       - name: Install MAUI iOS workload
-        run: dotnet workload install maui-ios
+        run: |
+          dotnet workload install maui-ios --skip-manifest-update
+          dotnet workload list
 
       - name: Restore NuGet packages
         run: dotnet restore -p:TargetFramework=net9.0-ios
