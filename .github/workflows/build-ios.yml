@@ -12,22 +12,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup .NET 10
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: |
+            9.0.x
+            10.0.x
 
-      - name: Install MAUI workload
-        run: dotnet workload install maui
+      - name: Install MAUI iOS workload
+        run: dotnet workload install maui-ios
 
       - name: Restore NuGet packages
-        run: dotnet restore
+        run: dotnet restore -p:TargetFramework=net9.0-ios
 
       - name: Build for iOS
-        run: dotnet build -f net10.0-ios -c Release --no-restore
+        run: dotnet build -f net9.0-ios -c Release --no-restore
 
       - name: Publish iOS App Bundle
-        run: dotnet publish -f net10.0-ios -c Release --no-build -o publish-ios -p:ArchiveOnBuild=true
+        run: dotnet publish -f net9.0-ios -c Release --no-build -o publish-ios -p:ArchiveOnBuild=true
 
       - name: Upload iOS App
         uses: actions/upload-artifact@v4
