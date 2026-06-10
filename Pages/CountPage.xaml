@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryApp.Pages.CountPage"
+             Title="Inventory Count">
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="12" RowSpacing="10">
+
+        <!-- Session Info -->
+        <Border Grid.Row="0" Padding="12" StrokeShape="RoundRectangle 12" 
+                BackgroundColor="{AppThemeBinding Light=#eef2ff, Dark=#1e1b4b}" Stroke="{AppThemeBinding Light=#c7d2fe, Dark=#3730a3}">
+            <Grid ColumnDefinitions="*,Auto">
+                <VerticalStackLayout Spacing="2">
+                    <Label x:Name="WarehouseLabel" Text="Warehouse" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1e293b, Dark=#f1f5f9}" />
+                    <Label x:Name="StatusLabel" Text="Open" FontSize="12" TextColor="{AppThemeBinding Light=#64748b, Dark=#94a3b8}" />
+                </VerticalStackLayout>
+                <Button x:Name="CloseBtn" Grid.Column="1" Text="🔒 Close"
+                        BackgroundColor="#dc2626" TextColor="White"
+                        CornerRadius="8" HeightRequest="38" FontSize="13"
+                        Clicked="OnCloseSession" />
+            </Grid>
+        </Border>
+
+        <!-- Barcode Scanner / Search -->
+        <Border Grid.Row="1" Padding="12" StrokeShape="RoundRectangle 12" 
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#1e293b}" Stroke="{AppThemeBinding Light=#e2e8f0, Dark=#334155}">
+            <VerticalStackLayout Spacing="8">
+                <Label x:Name="ScanTitle" Text="Scan Barcode" FontSize="13" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#475569, Dark=#cbd5e1}" />
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Entry x:Name="BarcodeEntry" 
+                           Keyboard="Numeric"
+                           ReturnType="Search"
+                           BackgroundColor="{AppThemeBinding Light=#f8fafc, Dark=#0f172a}"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                           PlaceholderColor="{AppThemeBinding Light=#94a3b8, Dark=#64748b}"
+                           HeightRequest="44" />
+                    <Button x:Name="ScanBtn" Grid.Column="1" Text="🔍 Lookup"
+                            BackgroundColor="#4f46e5" TextColor="White"
+                            CornerRadius="8" HeightRequest="44" FontSize="13"
+                            Clicked="OnScanBarcode" />
+                </Grid>
+                <Button x:Name="CameraBtn" Text="📷 Scan with Camera"
+                        BackgroundColor="#059669" TextColor="White"
+                        CornerRadius="8" HeightRequest="44" FontSize="13"
+                        Clicked="OnCameraScan" />
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Items List -->
+        <CollectionView x:Name="ItemsList" Grid.Row="2">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                    <Label Text="📦" FontSize="48" HorizontalOptions="Center" />
+                    <Label x:Name="NoItemsLabel" Text="No items loaded" FontSize="16" 
+                           TextColor="{AppThemeBinding Light=#94a3b8, Dark=#64748b}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,3" Padding="12" StrokeShape="RoundRectangle 10" 
+                           BackgroundColor="{AppThemeBinding Light=White, Dark=#1e293b}" Stroke="{AppThemeBinding Light=#e2e8f0, Dark=#334155}">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="2">
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding ProductName}" 
+                                   FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1e293b, Dark=#f1f5f9}" />
+                            <Label Grid.Row="0" Grid.Column="1" 
+                                   Text="{Binding CountedQuantity}" 
+                                   FontSize="20" FontAttributes="Bold" TextColor="#4f46e5" 
+                                   HorizontalOptions="End" />
+                            <Label Grid.Row="1" Grid.Column="0" 
+                                   Text="{Binding Barcode}" FontSize="11" TextColor="{AppThemeBinding Light=#94a3b8, Dark=#64748b}" />
+                            <Label Grid.Row="1" Grid.Column="1" 
+                                   Text="{Binding ExpectedQuantity, StringFormat='Expected: {0}'}" 
+                                   FontSize="11" TextColor="{AppThemeBinding Light=#64748b, Dark=#94a3b8}" HorizontalOptions="End" />
+                            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
+                                                   Spacing="8" Margin="0,4,0,0">
+                                <Button Text="−" WidthRequest="36" HeightRequest="36" 
+                                        BackgroundColor="#fee2e2" TextColor="#dc2626"
+                                        CornerRadius="8" FontSize="18" FontAttributes="Bold"
+                                        Clicked="OnDecrement" />
+                                <Button Text="+" WidthRequest="36" HeightRequest="36" 
+                                        BackgroundColor="#dcfce7" TextColor="#16a34a"
+                                        CornerRadius="8" FontSize="18" FontAttributes="Bold"
+                                        Clicked="OnIncrement" />
+                                <Button Text="✏️" WidthRequest="36" HeightRequest="36" 
+                                        BackgroundColor="{AppThemeBinding Light=#e2e8f0, Dark=#334155}" 
+                                        TextColor="{AppThemeBinding Light=#475569, Dark=#cbd5e1}"
+                                        CornerRadius="8" FontSize="13"
+                                        Clicked="OnEditQuantity" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Progress -->
+        <Border Grid.Row="3" Padding="12" StrokeShape="RoundRectangle 12" 
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#1e293b}" Stroke="{AppThemeBinding Light=#e2e8f0, Dark=#334155}">
+            <VerticalStackLayout Spacing="4">
+                <Label x:Name="ProgressLabel" Text="0 / 0 items counted" FontSize="12" TextColor="{AppThemeBinding Light=#64748b, Dark=#94a3b8}" />
+                <ProgressBar x:Name="ProgressBar" Progress="0" ProgressColor="#4f46e5" />
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

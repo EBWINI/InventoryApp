@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryApp.Pages.SessionsPage"
+             Title="Inventory Sessions">
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="16" RowSpacing="12">
+
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0" Spacing="4">
+            <Label x:Name="SessionsTitle" Text="📋 Inventory Sessions" FontSize="22" FontAttributes="Bold" 
+                   TextColor="{AppThemeBinding Light=#1e293b, Dark=#f1f5f9}" />
+            <Label x:Name="SessionsSubtitle" Text="Session List" FontSize="13" 
+                   TextColor="{AppThemeBinding Light=#94a3b8, Dark=#64748b}" />
+        </VerticalStackLayout>
+
+        <!-- Search -->
+        <SearchBar x:Name="SessionSearch" Grid.Row="1" 
+                   Placeholder="Search..."
+                   TextChanged="OnSearchTextChanged"
+                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1e293b}"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                   CancelButtonColor="#4f46e5" />
+
+        <!-- Session List with Pull-to-Refresh -->
+        <RefreshView x:Name="SessionsRefresh" Grid.Row="2"
+                     IsRefreshing="False"
+                     Refreshing="OnRefreshing"
+                     RefreshColor="#4f46e5">
+            <CollectionView x:Name="SessionsList">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                        <Label Text="📭" FontSize="48" HorizontalOptions="Center" />
+                        <Label x:Name="EmptyLabel" Text="No sessions yet" FontSize="16" 
+                               TextColor="{AppThemeBinding Light=#94a3b8, Dark=#64748b}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="0,4" Padding="14" StrokeShape="RoundRectangle 12" 
+                               BackgroundColor="{AppThemeBinding Light=White, Dark=#1e293b}" Stroke="{AppThemeBinding Light=#e2e8f0, Dark=#334155}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSessionTapped" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="2">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding WarehouseName}" 
+                                       FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1e293b, Dark=#f1f5f9}" />
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Status}" 
+                                       FontSize="12" FontAttributes="Bold" 
+                                       TextColor="{Binding Status, Converter={StaticResource StatusColorConverter}}" />
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                                       Text="{Binding StartDate}" FontSize="12" TextColor="{AppThemeBinding Light=#64748b, Dark=#94a3b8}" />
+                                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
+                                       Text="{Binding Notes}" FontSize="12" TextColor="{AppThemeBinding Light=#94a3b8, Dark=#64748b}" LineBreakMode="TailTruncation" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Bottom buttons -->
+        <HorizontalStackLayout Grid.Row="3" Spacing="12" HorizontalOptions="Center">
+            <Button x:Name="CreateBtn" Text="＋ New Session" 
+                    BackgroundColor="#4f46e5" TextColor="White"
+                    CornerRadius="10" HeightRequest="48"
+                    Clicked="OnCreateSession" />
+            <Button x:Name="RefreshBtn" Text="🔄 Refresh"
+                    BackgroundColor="{AppThemeBinding Light=#e2e8f0, Dark=#334155}" 
+                    TextColor="{AppThemeBinding Light=#475569, Dark=#cbd5e1}"
+                    CornerRadius="10" HeightRequest="48"
+                    Clicked="OnRefresh" />
+        </HorizontalStackLayout>
+
+    </Grid>
+</ContentPage>

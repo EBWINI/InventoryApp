@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="InventoryApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:InventoryApp.Pages"
+    Title="Inventory App"
+    Shell.FlyoutBehavior="Disabled">
+
+    <TabBar>
+        <ShellContent Title="Sessions" ContentTemplate="{DataTemplate pages:SessionsPage}" Route="SessionsPage" />
+        <ShellContent Title="Settings" ContentTemplate="{DataTemplate pages:SettingsPage}" Route="SettingsPage" />
+    </TabBar>
+
+</Shell>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryApp.Pages.SettingsPage"
+             Title="Settings">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20" MaximumWidthRequest="420">
+
+            <Label x:Name="SettingsTitle" Text="⚙️ Settings" FontSize="28" FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#1e293b, Dark=#f1f5f9}" />
+
+            <!-- Language -->
+            <Border Padding="16" StrokeShape="RoundRectangle 12"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1e293b}" Stroke="{AppThemeBinding Light=#e2e8f0, Dark=#334155}">
+                <VerticalStackLayout Spacing="8">
+                    <Label x:Name="LangLabel" Text="Language" FontSize="15" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#1e293b, Dark=#f1f5f9}" />
+                    <HorizontalStackLayout Spacing="12">
+                        <Button x:Name="ArabicBtn" Text="🇸🇦 العربية" CornerRadius="8" HeightRequest="44"
+                                FontSize="14" Clicked="OnArabicClicked" />
+                        <Button x:Name="EnglishBtn" Text="🇬🇧 English" CornerRadius="8" HeightRequest="44"
+                                FontSize="14" Clicked="OnEnglishClicked" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Theme -->
+            <Border Padding="16" StrokeShape="RoundRectangle 12"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1e293b}" Stroke="{AppThemeBinding Light=#e2e8f0, Dark=#334155}">
+                <VerticalStackLayout Spacing="8">
+                    <Label x:Name="ThemeLabel" Text="Theme" FontSize="15" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#1e293b, Dark=#f1f5f9}" />
+                    <HorizontalStackLayout Spacing="12">
+                        <Button x:Name="LightBtn" Text="☀️ Light" CornerRadius="8" HeightRequest="44"
+                                FontSize="14" Clicked="OnLightClicked" />
+                        <Button x:Name="DarkBtn" Text="🌙 Dark" CornerRadius="8" HeightRequest="44"
+                                FontSize="14" Clicked="OnDarkClicked" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Server URL -->
+            <Border Padding="16" StrokeShape="RoundRectangle 12"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1e293b}" Stroke="{AppThemeBinding Light=#e2e8f0, Dark=#334155}">
+                <VerticalStackLayout Spacing="8">
+                    <Label x:Name="ServerLabel" Text="Server URL" FontSize="15" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#1e293b, Dark=#f1f5f9}" />
+                    <Entry x:Name="ServerEntry"
+                           BackgroundColor="{AppThemeBinding Light=#f8fafc, Dark=#0f172a}"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                           HeightRequest="44" />
+                    <Button x:Name="SaveServerBtn" Text="Save" BackgroundColor="#4f46e5" TextColor="White"
+                            CornerRadius="8" HeightRequest="44" Clicked="OnSaveServer" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Logout -->
+            <Button x:Name="LogoutBtn" Text="🚪 Logout"
+                    BackgroundColor="#dc2626" TextColor="White"
+                    FontAttributes="Bold" HeightRequest="50" CornerRadius="12"
+                    Clicked="OnLogout" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

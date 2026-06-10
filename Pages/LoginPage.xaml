@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryApp.Pages.LoginPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16" VerticalOptions="Center" MaximumWidthRequest="420">
+
+            <!-- Logo / Title -->
+            <VerticalStackLayout Spacing="4" Margin="0,0,0,24">
+                <Label Text="📦" FontSize="48" HorizontalOptions="Center" />
+                <Label x:Name="TitleLabel" Text="Inventory App" FontSize="28" FontAttributes="Bold" 
+                       HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#1e293b, Dark=#f1f5f9}" />
+                <Label x:Name="SubtitleLabel" Text="تطبيق الجرد" FontSize="14"
+                       HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#94a3b8, Dark=#64748b}" />
+            </VerticalStackLayout>
+
+            <!-- Server URL -->
+            <VerticalStackLayout Spacing="4">
+                <Label x:Name="ServerUrlLabel" Text="Server URL" FontSize="13" TextColor="{AppThemeBinding Light=#475569, Dark=#cbd5e1}" FontAttributes="Bold" />
+                <Entry x:Name="ServerUrlEntry" 
+                       Placeholder="https://localhost:27374"
+                       Keyboard="Url"
+                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1e293b}"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                       HeightRequest="48" />
+            </VerticalStackLayout>
+
+            <!-- Shop Name (optional) -->
+            <VerticalStackLayout Spacing="4">
+                <Label x:Name="ShopNameLabel" Text="Shop Name (optional)" FontSize="13" TextColor="{AppThemeBinding Light=#475569, Dark=#cbd5e1}" FontAttributes="Bold" />
+                <Entry x:Name="ShopNameEntry" 
+                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1e293b}"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                       HeightRequest="48" />
+            </VerticalStackLayout>
+
+            <!-- Username -->
+            <VerticalStackLayout Spacing="4">
+                <Label x:Name="UsernameLabel" Text="Username" FontSize="13" TextColor="{AppThemeBinding Light=#475569, Dark=#cbd5e1}" FontAttributes="Bold" />
+                <Entry x:Name="UsernameEntry" 
+                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1e293b}"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                       HeightRequest="48" />
+            </VerticalStackLayout>
+
+            <!-- Password -->
+            <VerticalStackLayout Spacing="4">
+                <Label x:Name="PasswordLabel" Text="Password" FontSize="13" TextColor="{AppThemeBinding Light=#475569, Dark=#cbd5e1}" FontAttributes="Bold" />
+                <Entry x:Name="PasswordEntry" 
+                       IsPassword="True"
+                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1e293b}"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                       HeightRequest="48" />
+            </VerticalStackLayout>
+
+            <!-- Login Button -->
+            <Button x:Name="LoginBtn"
+                    Text="🔐  Login  /  تسجيل الدخول"
+                    BackgroundColor="#4f46e5"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    HeightRequest="52"
+                    CornerRadius="12"
+                    Margin="0,8,0,0"
+                    Clicked="OnLoginClicked" />
+
+            <!-- Status -->
+            <Label x:Name="StatusLabel" 
+                   Text="" 
+                   HorizontalOptions="Center"
+                   FontSize="13" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
