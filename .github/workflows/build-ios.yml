@@ -26,11 +26,30 @@ jobs:
       - name: Restore (iOS only, with RID)
         run: dotnet restore -p:TargetFramework=net9.0-ios -p:RuntimeIdentifier=ios-arm64
 
-      - name: Build for iOS
-        run: dotnet build -f net9.0-ios -c Release --no-restore -p:RuntimeIdentifier=ios-arm64 -p:MtouchLink=None -p:MtouchUseLlvm=false
+      - name: Build for iOS (unsigned)
+        run: dotnet build -f net9.0-ios -c Release --no-restore -p:RuntimeIdentifier=ios-arm64 -p:MtouchLink=None -p:MtouchUseLlvm=false -p:CodesignKey="" -p:CodesignProvision="" -p:CodesignRequireProvisioningProfile=false
 
-      - name: Publish iOS App Bundle
-        run: dotnet publish -f net9.0-ios -c Release --no-build -p:RuntimeIdentifier=ios-arm64 -o publish-ios -p:ArchiveOnBuild=true
+      - name: Create unsigned IPA
+        run: |
+          APP_PATH="bin/Release/net9.0-ios/ios-arm64/InventoryApp.app"
+          if [ -d "$APP_PATH" ]; then
+            mkdir -p publish-ios/Payload
+            cp -R "$APP_PATH" publish-ios/Payload/
+            cd publish-ios
+            zip -r ../InventoryApp-iOS.ipa Payload/
+            cd ..
+            ls -la InventoryApp-iOS.ipa
+          else
+            echo "ERROR: .app bundle not found at $APP_PATH"
+            ls -la bin/Release/net9.0-ios/ios-arm64/ 2>/dev/null || echo "bin check done"
+          fi
+
+      - name: Upload iOS App (unsigned IPA)
+        uses: actions/upload-artifact@v4
+        with:
+          name: InventoryApp-iOS
+          path: InventoryApp-iOS.ipa
+          retention-days: 7
 
       - name: Upload iOS App
         uses: actions/upload-artifact@v4
